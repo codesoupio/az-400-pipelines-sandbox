@@ -5,9 +5,10 @@
       "jest",
       "node"
     ],
+    "lib": [
+      "es2021"
+    ]
   },
-  "exclude": [
-    "node_modules",
-    "dist"
-  ]
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
 }
