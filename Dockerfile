@@ -1,4 +1,4 @@
-FROM node:18-alpine3.16 AS builder
+FROM node:lts-alpine3.18 AS builder
 
 WORKDIR /usr/src/app
 
