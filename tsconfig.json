@@ -10,5 +10,5 @@
     "moduleResolution": "node16",
     "outDir": "./dist"
   },
-  "exclude": ["./**/*Spec.ts", "node_modules", "dist"]
+  "exclude": ["./**/*Spec.ts", "node_modules", "dist"],
 }
