@@ -9,12 +9,23 @@ jobs:
   ci:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout pull request branch
+        uses: actions/checkout@v4
         with:
           ref: ${{ github.event.pull_request.head.sha }}
-      - uses: actions/setup-node@v4
+      - name: Set NodeJS version
+        uses: actions/setup-node@v4
         with:
           node-version: '20.11.0'
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run test:unit
+      - name: Install dependencies
+        run: npm ci
+      - name: Run unit tests
+        run: npm run test:unit
+      - name: Lint source code
+        run: npm run lint
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-file
+          path: 'dist/main.js'
+
