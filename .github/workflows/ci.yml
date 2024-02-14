@@ -4,7 +4,7 @@ on:
   pull_request:
     types: [opened, reopened]
 jobs:
-  ci:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout pull request branch
@@ -28,4 +28,15 @@ jobs:
         with:
           name: dist-file
           path: 'dist/main.js'
-
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-file
+      - name: Output contents
+        run: ls
+      - name: Deploy
+        run: echo "Deploying..."
