@@ -6,6 +6,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      test-output: ${{steps.test-output.outputs.key}}
     steps:
       - name: Checkout pull request branch
         uses: actions/checkout@v4
@@ -23,6 +25,11 @@ jobs:
         run: npm run lint
       - name: Build source code
         run: npm run build
+      - name: print github output variable
+        run: echo "$GITHUB_OUTPUT"
+      - name: testing job output feature
+        id: test-output
+        run: echo "key=value" >> "$GITHUB_OUTPUT"
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -36,7 +43,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: dist-file
-      - name: Output contents
-        run: ls
+      - name: test_build_job_output
+        run: echo "${{ needs.build.outputs.test-output }}"
       - name: Deploy
         run: echo "Deploying..."
