@@ -3,6 +3,9 @@ on:
   workflow_dispatch:
   pull_request:
     types: [opened, reopened, synchronize]
+# Env variables Can be added in global, job or step level
+env:
+  TEST: 'Test env variable'
 jobs:
   build:
     runs-on: ubuntu-latest
