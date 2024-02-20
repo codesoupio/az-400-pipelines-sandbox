@@ -5,9 +5,10 @@ on:
     types: [opened, reopened, synchronize]
 # Env variables Can be added in global, job or step level
 env:
-  TEST: 'Test env variable'
+  TEST: 'default'
 jobs:
   build:
+    environment: dev
     runs-on: ubuntu-latest
     outputs:
       test-output: ${{steps.test-output.outputs.key}}
@@ -38,6 +39,8 @@ jobs:
       - name: testing job output feature
         id: test-output
         run: echo "key=value" >> "$GITHUB_OUTPUT"
+      - name: Test environment
+        run: echo "${{ env.TEST }}"
       - name: test secrets
         run: echo "${{ secrets.TEST_SECRET }}"
       - name: Upload artifacts
