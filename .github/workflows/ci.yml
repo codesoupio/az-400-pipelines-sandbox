@@ -1,9 +1,11 @@
 name: ci
 on:
   workflow_dispatch:
-  pull_request:
+  pull_request_target:
     types: [opened, reopened, synchronize]
-# Env variables Can be added in global, job or step level
+    branches:
+      - main
+      # Env variables Can be added in global, job or step level
 env:
   MOCK_ENV: 'value'
 jobs:
