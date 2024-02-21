@@ -1,11 +1,9 @@
 name: ci
 on:
   workflow_dispatch:
-  pull_request_target:
-      branches:
-        - main
-        - master
-      # Env variables Can be added in global, job or step level
+  pull_request:
+    types: [opened, reopened, synchronize]
+# Env variables Can be added in global, job or step level
 env:
   MOCK_ENV: 'value'
 jobs:
@@ -30,10 +28,13 @@ jobs:
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
         run: npm ci
-#      - name: Run unit tests
-#        run: npm run test:unit
-      - name: Generate test coverage report
-        uses: ArtiomTr/jest-coverage-report-action@v2
+      - name: Run unit tests
+        run: npm run test:cov
+      - name: Upload test artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: 'coverage/lcov-report/index.html'
       - name: Lint source code
         run: npm run lint
       - name: Build source code
@@ -52,6 +53,7 @@ jobs:
 #        with:
 #          name: dist-file
 #          path: 'dist/main.js'
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
